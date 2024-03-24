@@ -1,0 +1,58 @@
+/* Sidebar.css */
+.sidebar {
+  position: fixed;
+  top: 100px; /* Adjust this value to the height of your header */
+  left: 10px;
+  width: 250px; /* Adjust width as needed */
+  height: calc(
+    100% - 150px
+  ); /* Adjust this value to the height of your header */
+  background-color: white; /* Sidebar color */
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  padding-top: 20px;
+  border-radius: 10px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  font-weight: 500;
+}
+.sidebar img {
+  margin-right: 15px;
+}
+.sidebar li {
+  padding: 8px 16px;
+  margin-top: 20px;
+  font-size: larger;
+  text-align: center;
+  transition: 0.3s;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+}
+
+.sidebar li:hover {
+  background-color: rgb(190, 190, 246); /* Hover color */
+  color: white;
+}
+/* Sidebar.css */
+.active {
+  background-color: rgb(190, 190, 246); /* Active item background color */
+  color: white; /* Active item text color */
+}
+
+/* Add this to your sidebar.css */
+.nav-link {
+  display: block; /* Makes the link fill the container */
+  text-align: center; /* Centers the text */
+  padding: 10px; /* Adds some space inside the box */
+  text-decoration: none; /* Removes underline */
+  color: black; /* Sets the text color */
+}
+
+.nav-link-active {
+  border: 2px solid rgb(190, 190, 246); /* Creates a red border around the link */
+  color: black; /* Sets the active link text color */
+  background-color: rgb(190, 190, 246);
+  border-radius: 20px;
+}

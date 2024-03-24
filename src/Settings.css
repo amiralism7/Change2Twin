@@ -1,0 +1,49 @@
+.settings-page label {
+  display: block;
+  margin-bottom: 10px;
+}
+.settings-page {
+  margin-bottom: 40px;
+  font-family: "Open Sans", sans-serif;
+}
+.settings-page input[type="email"],
+.settings-page input[type="password"],
+.settings-page select {
+  /* Styles for inputs and select elements */
+}
+p {
+  margin-bottom: 30px;
+}
+.settings-page .buttons {
+  text-align: right;
+  margin-top: 80px;
+}
+
+.save-button {
+  background-color: green;
+  border-radius: 10px;
+  width: 110px;
+  height: 30px;
+}
+
+.cancel-button {
+  background-color: rgb(230, 69, 69);
+  margin-left: 10px;
+  border-radius: 10px;
+  height: 30px;
+}
+#customize {
+  color: #537587;
+}
+#blank-box {
+  margin-left: 10px;
+  margin-bottom: 20px;
+  width: 250px;
+  border-radius: 4px;
+}
+#select-box,
+#check-box {
+  margin-left: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
