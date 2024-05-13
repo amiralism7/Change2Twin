@@ -42,13 +42,7 @@ const Settings = () => {
           {" "}
           <button id="dashboard-button">Settings</button>
         </div>
-        <div className="section first-row-section">
-          {" "}
-          <p id="current-date-charts">
-            {" "}
-            Date: {currentDate.toLocaleDateString()}
-          </p>
-        </div>
+
       </div>
       <div className="settings-page">
         <p id="customize">Customize your dashboard and account settings</p>

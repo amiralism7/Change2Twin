@@ -23,10 +23,7 @@ const Maintenance = () => {
         </div>
         <div className="section first-row-section-maintenace">
           {" "}
-          <p id="current-date-maintenance">
-            {" "}
-            Date: {currentDate.toLocaleDateString()}
-          </p>
+
         </div>
       </div>
       {/* Second Row */}

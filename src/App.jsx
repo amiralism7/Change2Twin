@@ -1,14 +1,17 @@
 // App.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./Header";
-import Sidebar from "./Sidebar";
+// import Sidebar from "./Sidebar";
 import "./App.css";
 import HomePage from "./HomePage"; // Import the HomePage component
-import Dashboard from "./Dashboard"; // Import the HomePage component
+import Dashboard from "./Dashboard";
 import Charts from "./Charts";
 import Maintenance from "./Maintenance";
 import Alerts from "./Alerts";
 import Settings from "./Settings";
+import MyLiveChartComponent from "./Calendar";
+import RedirectToHome from "./Redirect";
+import ChartsHistory from "./History";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -18,15 +21,18 @@ const App = () => {
       <div className="app">
         <Header />
         <div className="app-body">
-          <Sidebar />
+          {/* <Sidebar /> */}
           <div className="main-content">
             <Routes>
+              <Route exact path="/" element={<RedirectToHome />} />
               <Route exact path="/Home" element={<HomePage />} />
               <Route path="/Dashboard" element={<Dashboard />} />
               <Route path="/Charts" element={<Charts />} />
+              <Route path="/History" element={<ChartsHistory />} />
               <Route path="/Maintenance" element={<Maintenance />} />
               <Route path="/Alerts" element={<Alerts />} />
               <Route path="/Settings" element={<Settings />} />
+              <Route path="/Calendar" element={<MyLiveChartComponent />} />
             </Routes>
           </div>
         </div>

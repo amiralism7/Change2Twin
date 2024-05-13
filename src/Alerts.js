@@ -20,20 +20,13 @@ const Alerts = () => {
           {" "}
           <button id="dashboard-button">Alerts</button>
         </div>
-        <div className="section first-row-section">
-          {" "}
-          <p id="current-date-charts">
-            {" "}
-            Date: {currentDate.toLocaleDateString()}
-          </p>
-        </div>
+        <div className="section first-row-section"> </div>
       </div>
-
       {/* Second Row */}
       <div className="row">
         <div className="section huge alert">
           <div className="text-side">
-            <p>
+            <p id="pump-alert">
               <strong>Blocked Pump Alert</strong>
             </p>
             <p id="block-notification">
@@ -47,6 +40,10 @@ const Alerts = () => {
           <div className="image-side"></div>
           <img className="alert-img" src="images/alert.PNG" alt="alert" />
         </div>
+      </div>
+      <div>
+        {" "}
+        <div id="temporary" className="section huge alert "></div>
       </div>
     </div>
   );
