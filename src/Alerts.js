@@ -2,9 +2,15 @@ import React from "react";
 import "./Alerts.css";
 import { useState } from "react";
 import { useEffect } from "react";
+import moment from "moment";
+import axios from "axios";
+import ipData from './ip_backend.json';
 
 const Alerts = () => {
+  const ip = ipData.ip;
+
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [alerts, setAlerts] = useState([]);
   useEffect(() => {
     const timer = setTimeout(() => {
       setCurrentDate(new Date());
@@ -12,9 +18,22 @@ const Alerts = () => {
 
     return () => clearTimeout(timer);
   }, [currentDate]);
+
+  useEffect(() => {
+    axios
+      .get(`http://${ip}:5000/api/get_latest_alerts`)
+      .then((response) => {
+        setAlerts(response.data);
+      })
+      .catch((error) => {
+        setAlerts([]);
+      });
+    
+  }, []);
+
+
   return (
     <div className="charts-container">
-      {/* First Row */}
       <div className="row first-row">
         <div className="section first-row-section">
           {" "}
@@ -22,25 +41,26 @@ const Alerts = () => {
         </div>
         <div className="section first-row-section"> </div>
       </div>
-      {/* Second Row */}
-      <div className="row">
-        <div className="section huge alert">
-          <div className="text-side">
-            <p id="pump-alert">
-              <strong>Blocked Pump Alert</strong>
-            </p>
-            <p id="block-notification">
-              Pump is currently blocked and requires immediate attention.
-            </p>
-            <p className="highlight">
-              View Details
-              <img src="svg/eye.svg" alt="eye-icon" id="eye-svg" />
-            </p>
-          </div>
-          <div className="image-side"></div>
-          <img className="alert-img" src="images/alert.PNG" alt="alert" />
-        </div>
-      </div>
+      {
+            alerts && alerts.map((alert, index) => {
+              return (
+
+                <div className="row">
+                  <div className="section huge alert">
+                  <div className="text-side" key={index}>
+                      <p id="pump-alert">
+                        <strong>{alert.message}</strong>
+                      </p>
+                      <p id="block-notification">
+                        {alert.more_info}
+                      </p>
+                      <p id="time-alert"> {moment(alert.time).format("MMMM Do YYYY, h:mm:ss a")}</p>
+                  </div>
+                </div>
+                </div>
+              );
+            })
+          }
       <div>
         {" "}
         <div id="temporary" className="section huge alert "></div>

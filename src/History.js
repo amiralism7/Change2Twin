@@ -1,23 +1,28 @@
-// React Component for Charts Page
-
 import React from "react";
 import "./History.css";
 import { useState, useEffect } from "react";
 import ReactECharts from "echarts-for-react";
 import axios from "axios";
-// import { DateRangePicker, Stack } from "rsuite";
 import DateRangePicker from "rsuite/DateRangePicker";
 import "rsuite/DateRangePicker/styles/index.css";
-import { FaCalendar, FaClock } from "react-icons/fa";
-// import { BsCalendar2MonthFill } from "react-icons/bs";
+import { FaCalendar } from "react-icons/fa";
 import moment from "moment";
 import Dropdown from "./Dropdown";
+import ipData from './ip_backend.json';
 
 const ChartsHistory = () => {
+  const ip = ipData.ip;
+  const queryParameters = new URLSearchParams(window.location.search)
+  const pumpTypeParam = queryParameters.get("pumpType")
+  const dataTypeCandidate = pumpTypeParam === "barrier" ? "Barrier_speedRPM" : "Gelcoat_speedRPM";
+  const dataTypeNew = (pumpTypeParam === "barrier" || pumpTypeParam === "gelcoat") ? dataTypeCandidate : [];
+  const [dataType, setDataType] = useState(dataTypeNew);
+  const startDateParam = queryParameters.get("startDate")
+  const endDateParam = queryParameters.get("endDate")
+  
   const [currentDate, setCurrentDate] = useState(new Date());
   const [dateRange, setDateRange] = useState([]);
   const [dateRangeOut, setDateRangeOut] = useState([]);
-  const [dataType, setDataType] = useState([]);
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
@@ -36,22 +41,41 @@ const ChartsHistory = () => {
     }
   }, [dateRange]);
 
+  useEffect(() => {
+    if (startDateParam && endDateParam && dataType) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.post(
+            `http://${ip}:5000/api/history`,
+            {
+              startDate: startDateParam,
+              endDate: endDateParam,
+            }
+          );
+          const data = response.data;
+          setChartData(formatChartData(data));
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchData();
+    }
+  }, [startDateParam, endDateParam, dataType]);
+
   const handleOptionChange = (option) => {
-    // console.log(option);
     setDataType(option);
   };
 
   const handleApplyClick = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.1.16:5000/api/history",
+        `http://${ip}:5000/api/history`,
         {
           startDate: dateRangeOut[0],
           endDate: dateRangeOut[1],
         }
       );
       const data = response.data;
-      // console.log(data);
       setChartData(formatChartData(data));
     } catch (error) {
       console.error(error);
@@ -63,7 +87,7 @@ const ChartsHistory = () => {
       datetime: item.time,
       speed: item[dataType],
     }));
-
+    
     formattedData.sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
 
     const xAxisData = formattedData.map((item) => item.datetime);
@@ -72,16 +96,14 @@ const ChartsHistory = () => {
     return {
       dataZoom: [
         {
-          // Enable zooming inside the chart for the X axis
-          type: "inside",
+          type: "slider",
           filterMode: "none",
           xAxisIndex: 0,
           start: 60,
           end: 100,
         },
         {
-          // Enable zooming inside the chart for the Y axis
-          type: "inside",
+          type: "slider",
           filterMode: "none",
           yAxisIndex: 0,
         },
@@ -103,6 +125,7 @@ const ChartsHistory = () => {
       yAxis: {
         type: "value",
         name: "Value",
+        scale: "true",
         axisLabel: {
           formatter: "{value}",
         },
@@ -156,30 +179,9 @@ const ChartsHistory = () => {
             </button>
           </div>
         </div>
-        {/* <div className="section second-row-section">
-          {chartData && (
-            <ReactECharts
-              option={chartData}
-              style={{ height: "35vh", width: "25vw", minWidth: "420px" }}
-            />
-          )}
-        </div> */}
+
       </div>
       <div className="row" id="history-chart-row">
-        {/* <div className="section huge alert">
-          <DateRangePicker
-            format="yyyy/MMM/dd hh:mm:ss aa"
-            size="lg"
-            appearance="default"
-            placeholder="Default"
-            style={{ width: 230 }}
-            value={dateRange}
-            onChange={setDateRange}
-            showMeridian
-            caretAs={FaCalendar}
-          />
-        </div> */}
-
         <div className="section second-row-section" id="history-chart">
           {chartData && (
             <ReactECharts

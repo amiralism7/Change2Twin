@@ -1,9 +1,7 @@
-// App.jsx
 import React, { useEffect } from "react";
 import Header from "./Header";
-// import Sidebar from "./Sidebar";
 import "./App.css";
-import HomePage from "./HomePage"; // Import the HomePage component
+import HomePage from "./HomePage"; 
 import Dashboard from "./Dashboard";
 import Charts from "./Charts";
 import Maintenance from "./Maintenance";
@@ -12,6 +10,9 @@ import Settings from "./Settings";
 import MyLiveChartComponent from "./Calendar";
 import RedirectToHome from "./Redirect";
 import ChartsHistory from "./History";
+import Configurations from "./Configurations";
+import Sessions from "./Sessions";
+import Products from "./Products";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -21,7 +22,6 @@ const App = () => {
       <div className="app">
         <Header />
         <div className="app-body">
-          {/* <Sidebar /> */}
           <div className="main-content">
             <Routes>
               <Route exact path="/" element={<RedirectToHome />} />
@@ -32,7 +32,10 @@ const App = () => {
               <Route path="/Maintenance" element={<Maintenance />} />
               <Route path="/Alerts" element={<Alerts />} />
               <Route path="/Settings" element={<Settings />} />
+              <Route path="/Configurations" element={<Configurations />} />
               <Route path="/Calendar" element={<MyLiveChartComponent />} />
+              <Route path="/Sessions" element={<Sessions />} />
+              <Route path="/Products" element={<Products />} />
             </Routes>
           </div>
         </div>

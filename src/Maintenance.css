@@ -1,25 +1,31 @@
-/* Charts.css */
 .maintenance-container {
   display: flex;
   flex-direction: column;
 }
 
-.row {
+.first-row-maintenace, .second-row-maintenace, .third-row-maintenace, .fourth-row-maintenace {
   display: flex;
+  justify-content: center;
+
 }
 
 .first-row-section-maintenace {
   /* height: auto;  */
-  width: 90%; /* 1.5y */
+  width: 90%; 
 }
 
 .second-row-section-maintenace,
 .third-row-section-maintenace,
 .fourth-row-section-maintenace {
-  height: 20vh; /* 2.75x */
-  width: 90%; /* 1.5y */
+  height: 20vh; 
+  width: 90%; 
+ 
 }
-
+.first-row-section.history {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px; 
+}
 #current-date-maintenance {
   font-family: "Open Sans", sans-serif;
   font-size: large;
@@ -55,3 +61,26 @@
   color: rgb(140, 159, 243);
   margin-top: 15px;
 }
+.reset-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+button{
+  background: rgb(143, 164, 251); 
+    border: 1px solid #929191;
+    height: 38px;
+    width: auto;
+    color: rgb(254, 253, 253);
+    /* margin-top: 0px;
+    margin-left: 80px;
+    margin-right: 340px;
+    margin-bottom: 5px; */
+    font-size: 16px; 
+    border-radius: 5px;
+    box-shadow: inset 0 -3px 6px 0 rgba(0, 0, 0, 0.1),
+      0 2px 4px 0 rgba(252, 247, 247, 0.1); 
+    text-align: center;
+  margin-left: 10px;
+}
+

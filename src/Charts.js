@@ -1,11 +1,12 @@
-// React Component for Charts Page
 import React from "react";
 import "./Charts.css";
 import { useState, useEffect } from "react";
 import ReactECharts from "echarts-for-react";
 import axios from "axios";
+import ipData from './ip_backend.json';
 
 const Charts = () => {
+  const ip = ipData.ip;
   const [currentDate, setCurrentDate] = useState(new Date());
 
   useEffect(() => {
@@ -26,8 +27,8 @@ const Charts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://192.168.1.16:5000/api/get_20");
-        const data = response.data;
+        const response = await axios.get(`http://${ip}:5000/api/get_20`);
+        const data = response.data.data;
 
         setChartDataBarrierSpeed(formatChartDataBarrierSpeed(data));
         setChartDataGelcoatSpeed(formatChartDataGelcoatSpeed(data));
@@ -46,9 +47,6 @@ const Charts = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  /**
-   * Formats the chart data for pump speed (Barrier).
-   */
   const formatChartDataBarrierSpeed = (data) => {
     const formattedData = data.map((item) => ({
       datetime: item.time,
@@ -63,7 +61,6 @@ const Charts = () => {
     return {
       dataZoom: [
         {
-          // Enable zooming inside the chart for the X axis
           type: "inside",
           filterMode: "none",
           xAxisIndex: 0,
@@ -71,7 +68,6 @@ const Charts = () => {
           end: 100,
         },
         {
-          // Enable zooming inside the chart for the Y axis
           type: "inside",
           filterMode: "none",
           yAxisIndex: 0,
@@ -112,9 +108,7 @@ const Charts = () => {
     };
   };
 
-  /**
-   * Formats the chart data for pump speed (Gelcoat).
-   */
+
   const formatChartDataGelcoatSpeed = (data) => {
     const formattedData = data.map((item) => ({
       datetime: item.time,
@@ -129,7 +123,6 @@ const Charts = () => {
     return {
       dataZoom: [
         {
-          // Enable zooming inside the chart for the X axis
           type: "inside",
           filterMode: "none",
           xAxisIndex: 0,
@@ -137,7 +130,6 @@ const Charts = () => {
           end: 100,
         },
         {
-          // Enable zooming inside the chart for the Y axis
           type: "inside",
           filterMode: "none",
           yAxisIndex: 0,
@@ -178,9 +170,6 @@ const Charts = () => {
     };
   };
 
-  /**
-   * Formats the chart data for pump speed (Barrier).
-   */
   const formatChartDataPressure = (data) => {
     const formattedData = data.map((item) => ({
       datetime: item.time,
@@ -195,7 +184,6 @@ const Charts = () => {
     return {
       dataZoom: [
         {
-          // Enable zooming inside the chart for the X axis
           type: "inside",
           filterMode: "none",
           xAxisIndex: 0,
@@ -203,7 +191,6 @@ const Charts = () => {
           end: 100,
         },
         {
-          // Enable zooming inside the chart for the Y axis
           type: "inside",
           filterMode: "none",
           yAxisIndex: 0,
@@ -244,9 +231,6 @@ const Charts = () => {
     };
   };
 
-  /**
-   * Formats the chart data for Water level.
-   */
   const formatChartDataWaterlvl2 = (data) => {
     const formattedData = data.map((item) => ({
       datetime: item.time,
@@ -261,7 +245,6 @@ const Charts = () => {
     return {
       dataZoom: [
         {
-          // Enable zooming inside the chart for the X axis
           type: "inside",
           filterMode: "none",
           xAxisIndex: 0,
@@ -269,7 +252,6 @@ const Charts = () => {
           end: 100,
         },
         {
-          // Enable zooming inside the chart for the Y axis
           type: "inside",
           filterMode: "none",
           yAxisIndex: 0,
@@ -310,9 +292,6 @@ const Charts = () => {
     };
   };
 
-  /**
-   * Formats the chart data for Pulses (Barrier).
-   */
   const formatChartDataBarrierPulse = (data) => {
     const formattedData = data.map((item) => ({
       datetime: item.time,
@@ -327,7 +306,6 @@ const Charts = () => {
     return {
       dataZoom: [
         {
-          // Enable zooming inside the chart for the X axis
           type: "inside",
           filterMode: "none",
           xAxisIndex: 0,
@@ -335,7 +313,6 @@ const Charts = () => {
           end: 100,
         },
         {
-          // Enable zooming inside the chart for the Y axis
           type: "inside",
           filterMode: "none",
           yAxisIndex: 0,
@@ -376,9 +353,6 @@ const Charts = () => {
     };
   };
 
-  /**
-   * Formats the chart data for pump speed (Barrier).
-   */
   const formatChartDataGelcoatPulse = (data) => {
     const formattedData = data.map((item) => ({
       datetime: item.time,
@@ -393,7 +367,6 @@ const Charts = () => {
     return {
       dataZoom: [
         {
-          // Enable zooming inside the chart for the X axis
           type: "inside",
           filterMode: "none",
           xAxisIndex: 0,
@@ -401,7 +374,6 @@ const Charts = () => {
           end: 100,
         },
         {
-          // Enable zooming inside the chart for the Y axis
           type: "inside",
           filterMode: "none",
           yAxisIndex: 0,
@@ -444,7 +416,6 @@ const Charts = () => {
 
   return (
     <div className="charts-container">
-      {/* First Row */}
       <div className="row first-row">
         <div className="section first-row-section">
           {" "}
@@ -452,7 +423,6 @@ const Charts = () => {
         </div>
         <div className="section first-row-section"> </div>
       </div>
-      {/* Second Row */}
       <div className="row second-row">
         <div className="section second-row-section">
           {chartDataBarrierSpeed && (
@@ -479,7 +449,6 @@ const Charts = () => {
           )}
         </div>
       </div>
-      {/* Third Row */}
       <div className="row third-row">
         <div className="section third-row-section">
           {chartDataWaterlvl2 && (

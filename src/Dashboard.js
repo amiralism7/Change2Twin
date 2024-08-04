@@ -4,8 +4,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import ReactECharts from "echarts-for-react";
 import axios from "axios";
+import ipData from './ip_backend.json';
 
 const Dashboard = () => {
+  const ip = ipData.ip;
   const [currentDate, setCurrentDate] = useState(new Date());
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -15,15 +17,19 @@ const Dashboard = () => {
     return () => clearTimeout(timer);
   }, [currentDate]);
 
-  // State to hold the temperature
   const [chartDataBarrierSpeed, setChartDataBarrierSpeed] = useState(null);
   const [chartDataGelcoatSpeed, setChartDataGelcoatSpeed] = useState(null);
-
+  const [gelcoatQuantity, setGelcoatQuantity] = useState(null);
+  const [barrierQuantity, setBarrierQuantity] = useState(null);
+  const [pressure, setPressure] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://192.168.1.16:5000/api/get_20");
-        const data = response.data;
+        const response = await axios.get(`http://${ip}:5000/api/get_20`);
+        const data = response.data.data;
+        setBarrierQuantity(response.data.total_weight_barr);
+        setGelcoatQuantity(response.data.total_weight_gel);
+        setPressure(response.data.pressure);
 
         setChartDataBarrierSpeed(formatChartDataBarrierSpeed(data));
         setChartDataGelcoatSpeed(formatChartDataGelcoatSpeed(data));
@@ -52,7 +58,6 @@ const Dashboard = () => {
     return {
       dataZoom: [
         {
-          // Enable zooming inside the chart for the X axis
           type: "inside",
           filterMode: "none",
           xAxisIndex: 0,
@@ -60,7 +65,6 @@ const Dashboard = () => {
           end: 100,
         },
         {
-          // Enable zooming inside the chart for the Y axis
           type: "inside",
           filterMode: "none",
           yAxisIndex: 0,
@@ -101,9 +105,6 @@ const Dashboard = () => {
     };
   };
 
-  /**
-   * Formats the chart data for pump speed (Gelcoat).
-   */
   const formatChartDataGelcoatSpeed = (data) => {
     const formattedData = data.map((item) => ({
       datetime: item.time,
@@ -118,7 +119,6 @@ const Dashboard = () => {
     return {
       dataZoom: [
         {
-          // Enable zooming inside the chart for the X axis
           type: "inside",
           filterMode: "none",
           xAxisIndex: 0,
@@ -126,7 +126,6 @@ const Dashboard = () => {
           end: 100,
         },
         {
-          // Enable zooming inside the chart for the Y axis
           type: "inside",
           filterMode: "none",
           yAxisIndex: 0,
@@ -169,13 +168,11 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      {/* First Row */}
       <div className="row">
         <div className="section first-row">
           <button id="dashboard-button">Dashboard</button>
         </div>
       </div>
-      {/* Second Row */}
       <div className="row second-row">
         <div className="section large">
           <img
@@ -187,7 +184,6 @@ const Dashboard = () => {
         </div>
 
         <div className="section x-large" id="chart-left">
-          {/* <BarrierSpeedChart /> */}
           {chartDataBarrierSpeed && (
             <ReactECharts
               option={chartDataBarrierSpeed}
@@ -196,7 +192,6 @@ const Dashboard = () => {
           )}
         </div>
         <div className="section x-large" id="chart-right">
-          {/* <GelcoatSpeedChart /> */}
           {chartDataGelcoatSpeed && (
             <ReactECharts
               option={chartDataGelcoatSpeed}
@@ -214,64 +209,35 @@ const Dashboard = () => {
           />
         </div>
       </div>
-      {/* Third Row */}
       <div className="row third-row">
         <div className="section small">
-          <div class="section-box">
-            <div class="content">
-              <p>Barrier Quantity</p>
-              <p id="material-weight">2.6kg</p>
+          <div className="section-box">
+            <div className="content">
+              <p className="pbox-dashboard">Barrier Quantity in the last 5 seconds</p>
+              {barrierQuantity && <p id="material-weight"><strong>{barrierQuantity}</strong></p>}
             </div>
           </div>
         </div>
+        
         <div className="section medium">
           {" "}
-          <div class="section-box-temperature">
-            <div class="content-temperature">
-              <p id="temp">Temperature</p>
-              <p id="temperature">25°C</p>
-            </div>
-          </div>
-        </div>
-        <div className="section medium">
-          {" "}
-          <div class="section-box-temperature">
-            <div class="content-temperature">
+          <div className="section-box-temperature">
+            <div className="content-temperature">
               <p>Pressure</p>
               <p>
-                <strong>2.5 bar</strong>
+              {pressure && <p >{pressure.toFixed(2)}</p>}
               </p>
             </div>
           </div>
         </div>
         <div className="section small">
-          <div class="section-box">
-            <div class="content">
-              <p>Gelcoat Quantity</p>
-              <p id="material-weight">1.3kg</p>
+          <div className="section-box">
+            <div className="content">
+              <p>Gelcoat Quantity in the last 5 seconds</p>
+              
+              {gelcoatQuantity && <p >{gelcoatQuantity.toFixed(2)}</p>}
             </div>
           </div>
-        </div>
-      </div>
-      {/* Fourth Row */}
-      <div className="row fourth-row">
-        <div className="section huge">
-          <div className="text-side">
-            <p>
-              <strong>Days Left: 15</strong>
-            </p>
-            <p className="countdown">Maintenance Countdown</p>
-          </div>
-          <div className="image-side"></div>
-          <img
-            className="maintenance-img"
-            src="images/maintenance-countdown.PNG"
-            alt="maintenance"
-          />
-        </div>
-        <div className="section huge">
-          {" "}
-          <img className="spike-img" src="images/spike.PNG" alt="spike" />
         </div>
       </div>
     </div>

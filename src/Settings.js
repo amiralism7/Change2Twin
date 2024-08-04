@@ -3,6 +3,9 @@ import "./Settings.css";
 import { useState } from "react";
 import { useEffect } from "react";
 
+//  Not functional yet
+//  This is a placeholder for the Settings page
+
 const Settings = () => {
   const [settings, setSettings] = useState({
     email: "",
@@ -23,7 +26,6 @@ const Settings = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle submission logic here
     console.log(settings);
   };
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -77,7 +79,6 @@ const Settings = () => {
               onChange={handleChange}
               id="select-box"
             >
-              {/* Add more options as needed */}
               <option value="English">English</option>
               <option value="German">German</option>
             </select>
@@ -90,7 +91,6 @@ const Settings = () => {
               onChange={handleChange}
               id="select-box"
             >
-              {/* Add more options as needed */}
               <option value="GMT">GMT</option>
               <option value="CET">CET</option>
             </select>

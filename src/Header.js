@@ -49,6 +49,12 @@ function Header() {
               </a>
             </li>
             <li>
+              <a href="/Configurations" className="nav-link px-2 link-body-emphasis">
+                {/* <img src="svg/speedometer2.svg" /> */}
+                Configurations
+              </a>
+            </li>
+            <li>
               <a
                 href="/Maintenance"
                 className="nav-link px-2 link-body-emphasis"
@@ -59,9 +65,15 @@ function Header() {
               </a>
             </li>
             <li>
-              <a href="/Calendar" className="nav-link px-2 link-body-emphasis">
+              <a href="/Sessions" className="nav-link px-2 link-body-emphasis">
                 {/* <img src="svg/calendar2-date.svg" /> */}
-                Calendar
+                Sessions
+              </a>
+            </li>
+            <li>
+              <a href="/Products" className="nav-link px-2 link-body-emphasis">
+                {/* <img src="svg/calendar2-date.svg" /> */}
+                Products
               </a>
             </li>
           </ul>

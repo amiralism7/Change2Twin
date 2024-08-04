@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./HomePage.css"; // Make sure to create a corresponding CSS file for HomePage
+import "./HomePage.css";
 const HomePage = () => {
   return (
     <div className="home-img main-content">
